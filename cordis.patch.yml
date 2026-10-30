@@ -1,0 +1,10 @@
+# dsh-auto-update bundle patch: inserts the 自动更新 section into a profile's layer stack.
+# 用户自己的 patch 层（~/.dsh/profiles/<profile>/cordis.patch.yml）可以按 id 覆盖这里的 config。
+- insert:
+    - id: dsh-auto-update
+      name: 'dsh-auto-update'
+      config:
+        channel: auto
+        autoCheck: true
+        checkIntervalHours: 6
+        registry: https://registry.npmjs.org

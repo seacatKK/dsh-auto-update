@@ -1,0 +1,75 @@
+{
+  "name": "dsh-auto-update",
+  "version": "0.3.0",
+  "description": "Self-update plugin for DeepSeek Harness (DSH): checks npm on page load, prompts in the Web UI, updates the global install, rolls back automatically if the new build cannot boot, and keeps locally installed plugins in sync.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "update",
+    "self-update",
+    "rollback"
+  ],
+  "license": "MIT",
+  "author": "dsh-auto-update contributors",
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "bin": {
+    "dsh-auto-update": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "node test/semver-oracle.mjs && node test/host-smoke.mjs && node test/client-smoke.mjs && node test/backup-roundtrip.mjs && node test/bootlog-smoke.mjs && node test/launcher-smoke.mjs && node test/dsh-launch-smoke.mjs && node test/runner-e2e.mjs && node test/sanitize-smoke.mjs",
+    "locales": "node scripts/export-locales.mjs",
+    "cli": "node bin/cli.js",
+    "test:boot": "node test/bundle-boot.mjs",
+    "setup": "node scripts/install.mjs",
+    "desktop": "node scripts/install-desktop.mjs",
+    "prepack": "node scripts/check-package.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    },
+    "compatibility": {
+      "dsh": ">=0.2.0-rc.2"
+    }
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "bin",
+    "lib",
+    "locale",
+    "scripts/install.mjs",
+    "scripts/install-desktop.mjs",
+    "scripts/templates",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/dsh": ">=0.2.0-rc.2",
+    "react": "^18.2.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
